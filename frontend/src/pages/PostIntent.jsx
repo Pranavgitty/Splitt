@@ -20,14 +20,14 @@ export default function PostIntent() {
   const { isLoading: authLoading } = useRequireAuth();
   const { mutateAsync, isPending } = useCreateIntent();
 
-  if (authLoading) return <div className="p-8 text-gray-500">Loading...</div>;
-
   const [direction, setDirection] = useState('FROM_CAMPUS');
   const [otherPoint, setOtherPoint] = useState('');
   const [earliestTime, setEarliestTime] = useState('');
   const [latestTime, setLatestTime] = useState('');
   const [maxFare, setMaxFare] = useState('');
   const [error, setError] = useState('');
+
+  if (authLoading) return <div className="p-8 text-gray-500">Loading...</div>;
 
   const minDatetime = (() => {
     const d = new Date();

@@ -20,8 +20,6 @@ export default function PostRide() {
   const { isLoading: authLoading } = useRequireAuth();
   const { mutateAsync, isPending } = useCreateRide();
 
-  if (authLoading) return <div className="p-8 text-gray-500">Loading...</div>;
-
   const [direction, setDirection] = useState('FROM_CAMPUS');
   const [otherPoint, setOtherPoint] = useState('');
   const [departureTime, setDepartureTime] = useState('');
@@ -29,6 +27,8 @@ export default function PostRide() {
   const [farePerHead, setFarePerHead] = useState('');
   const [notes, setNotes] = useState('');
   const [error, setError] = useState('');
+
+  if (authLoading) return <div className="p-8 text-gray-500">Loading...</div>;
 
   const minDatetime = (() => {
     const d = new Date();
