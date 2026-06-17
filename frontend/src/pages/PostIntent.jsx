@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRequireAuth } from '../features/auth/hooks';
 import { useCreateIntent } from '../features/intents/hooks';
@@ -19,6 +19,12 @@ export default function PostIntent() {
   const navigate = useNavigate();
   const { isLoading: authLoading } = useRequireAuth();
   const { mutateAsync, isPending } = useCreateIntent();
+
+  useEffect(() => {
+    document.title = 'Post an intent · Splitt';
+  }, []);
+
+  if (authLoading) return <div className="p-8 text-gray-500">Loading...</div>;
 
   const [direction, setDirection] = useState('FROM_CAMPUS');
   const [otherPoint, setOtherPoint] = useState('');
@@ -52,7 +58,7 @@ export default function PostIntent() {
       otherPoint,
       earliestTime: new Date(earliestTime).toISOString(),
       latestTime: new Date(latestTime).toISOString(),
-      maxFare: maxFare ? Number(maxFare) : null,
+      maxFare: maxFare ? Number(maxFare) : undefined,
     };
 
     try {

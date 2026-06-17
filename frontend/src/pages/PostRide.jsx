@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRequireAuth } from '../features/auth/hooks';
 import { useCreateRide } from '../features/rides/hooks';
@@ -19,6 +19,12 @@ export default function PostRide() {
   const navigate = useNavigate();
   const { isLoading: authLoading } = useRequireAuth();
   const { mutateAsync, isPending } = useCreateRide();
+
+  useEffect(() => {
+    document.title = 'Post a ride · Splitt';
+  }, []);
+
+  if (authLoading) return <div className="p-8 text-gray-500">Loading...</div>;
 
   const [direction, setDirection] = useState('FROM_CAMPUS');
   const [otherPoint, setOtherPoint] = useState('');
@@ -51,7 +57,7 @@ export default function PostRide() {
       departureTime: new Date(departureTime).toISOString(),
       seatsTotal: Number(seatsTotal),
       farePerHead: Number(farePerHead),
-      notes: notes.trim() || null,
+      notes: notes.trim() || undefined,
     };
 
     try {
